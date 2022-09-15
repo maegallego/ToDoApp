@@ -1,20 +1,34 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-  </nav>
-  <router-view/>
+  <nav v-if="user != null"><router-link to='/'>Home</router-link> |</nav>
+  <router-view />
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { mapState, mapActions } from 'pinia';
+import userStore from '../store/user';
 
-export default defineComponent({
-  setup() {
-    
+export default {
+  name: 'App',
+  computed: {
+    ...mapState(userStore, ['user']),
   },
-})
+  methods: {
+    ...mapActions(userStore, ['fetchUser']),
+  },
+  async created() {
+    try {
+      await this.fetchUser();
+      if (!this.user) {
+        this.$router.push({ path: '/auth' });
+      } else {
+        this.$router.push({ path: '/' });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  },
+};
 </script>
-
 
 <style>
 #app {
