@@ -5,7 +5,7 @@
 
 <script>
 import { mapState, mapActions } from 'pinia';
-import userStore from '../store/user';
+import userStore from '@/store/user';
 
 export default {
   name: 'App',

@@ -1,16 +1,37 @@
 <template>
-  <h1>Esta es la vista de sign up.</h1>
-  <form @submit.prevent="handleSignUp">
     <div>
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" v-model="email" />
+        <h1>Esta es la vista de sign up.</h1>
+        <form @submit.prevent='handleSignUp'>
+            <div>
+                <label for='email'>Email
+                    <input id='email'
+                    type='email'
+                    placeholder='email'
+                    v-model='email'
+                    />
+                </label>
+            </div>
+            <div>
+                <label for='password'>Password
+                    <input id='password'
+                    placeholder='password'
+                    type='password'
+                    v-model='password'
+                    />
+                </label>
+            </div>
+            <div>
+                <label for="confirmPassword">Confirm Password
+                    <input id="confirmPassword"
+                    placeholder='Confirm Password'
+                    type="confirmPassword"
+                    v-model="confirmPassword" />
+                </label>
+            </div>
+            <button @click="handleSignUp">Sign Up</button>
+            <button @click="handleSignIn">Sign In</button>
+        </form>
     </div>
-    <div>
-      <label for="password">Password</label>
-      <input id="password" name="password" type="password" v-model="password" />
-    </div>
-    <button type="submit">Sign Up</button>
-  </form>
 </template>
 
 <script>
@@ -18,11 +39,12 @@ import { mapState, mapActions } from 'pinia';
 import userStore from '@/store/user';
 
 export default {
-  name: 'AuthView',
+  name: 'AuthView.vue',
   data() {
     return {
       email: '',
       password: '',
+      confirmPassword: '',
     };
   },
   computed: {
