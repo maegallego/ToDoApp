@@ -1,20 +1,37 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-  </nav>
-  <router-view/>
+  <NavBar />
+  <router-view />
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { mapState, mapActions } from 'pinia';
+import userStore from '@/store/user';
+import NavBar from './components/NavBar.vue';
 
-export default defineComponent({
-  setup() {
-    
+export default {
+  name: 'App',
+  computed: {
+    ...mapState(userStore, ['user']),
   },
-})
-</script>
+  methods: {
+    ...mapActions(userStore, ['fetchUser']),
+  },
+  async created() {
+    try {
+      await this.fetchUser();
+      if (!this.user) {
+        this.$router.push({ path: '/auth' });
+      } else {
+        this.$router.push({ path: '/' });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  components: { NavBar },
+};
 
+</script>
 
 <style>
 #app {
