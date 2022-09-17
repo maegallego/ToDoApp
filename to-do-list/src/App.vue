@@ -16,19 +16,18 @@ export default {
   methods: {
     ...mapActions(userStore, ['fetchUser']),
   },
-  /*
   async created() {
     try {
       await this.fetchUser();
       if (!this.user) {
-        this.$router.push({ path: '/login' });
+        this.$router.push({ path: '/auth' });
       } else {
         this.$router.push({ path: '/' });
       }
     } catch (e) {
       console.error(e);
     }
-  }, */
+  },
   components: { NavBar },
 };
 

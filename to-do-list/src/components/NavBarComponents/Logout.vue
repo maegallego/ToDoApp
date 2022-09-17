@@ -2,7 +2,7 @@
     <button v-if="user != null" @click="handleSignOut">
         Log out
     </button>
-    <router-link v-if="user === null" to='/login'>
+    <router-link v-if="user === null" to='/auth/login'>
         Sign In
     </router-link>
 </template>
@@ -19,6 +19,7 @@ export default {
   methods: {
     ...mapActions(userStore, ['signOut']),
     handleSignOut() {
+      this.signOut();
       this.$router.push({ path: '/logout-ok' });
     },
   },
