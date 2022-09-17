@@ -1,16 +1,13 @@
 <template>
-  <div>
-    <h1>Esta es la vista de sign up/sign in.</h1>
-    <div>
-      <SignUp />
-    </div>
-  </div>
+    <SignIn />
+    <p>Don't have an account?</p>
+    <a href="/auth">Register</a>
 </template>
 
 <script>
+import SignIn from '@/components/SignIn.vue';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/store/user';
-import SignUp from '@/components/SignUp.vue';
 
 export default {
   name: 'AuthView.vue',
@@ -25,7 +22,7 @@ export default {
     ...mapState(userStore, ['user']),
   },
   methods: {
-    ...mapActions(userStore, ['signUp', 'signOut']),
+    ...mapActions(userStore, ['signIn']),
   },
   watch: {
     user() {
@@ -34,6 +31,6 @@ export default {
       }
     },
   },
-  components: { SignUp },
+  components: { SignIn },
 };
 </script>

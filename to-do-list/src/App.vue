@@ -1,11 +1,15 @@
 <template>
-  <nav v-if="user != null"><router-link to='/'>Home</router-link> |</nav>
+  <nav>
+    <router-link to='/'>Home</router-link> |
+    <NavBar />
+  </nav>
   <router-view />
 </template>
 
 <script>
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/store/user';
+import NavBar from './components/NavBar.vue';
 
 export default {
   name: 'App',
@@ -19,7 +23,7 @@ export default {
     try {
       await this.fetchUser();
       if (!this.user) {
-        this.$router.push({ path: '/auth' });
+        this.$router.push({ path: '/login' });
       } else {
         this.$router.push({ path: '/' });
       }
@@ -27,7 +31,9 @@ export default {
       console.error(e);
     }
   },
+  components: { NavBar },
 };
+
 </script>
 
 <style>
