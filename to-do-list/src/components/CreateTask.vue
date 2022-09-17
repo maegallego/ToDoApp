@@ -1,17 +1,18 @@
 <template>
   <div>
     <h2>Create Task</h2>
-      <form @submit.prevent='handleNewTask'>
+      <form>
           <div>
-              <label for='tasks'>Task
-                  <input id='Tasks'
+              <label for='titleTask'>Task
+                  <input
+                  name='titleTask'
                   type='text'
                   placeholder='New Task'
-                  v-model='tasks'
+                  v-model='titleTask'
                   />
               </label>
           </div>
-          <button @click="handleNewTask">Create</button>
+          <button @click.prevent="handleNewTask">Create</button>
       </form>
   </div>
 </template>
@@ -19,24 +20,27 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import taskStore from '@/store/task';
+import userStore from '@/store/user';
 
 export default {
   name: 'AuthView.vue',
   data() {
     return {
-      tasks: '',
+      titleTask: '',
     };
   },
   computed: {
     ...mapState(taskStore, ['tasks']),
+    ...mapState(userStore, ['user']),
   },
   methods: {
-    ...mapActions(taskStore, ['newTask']),
+    ...mapActions(taskStore, ['createTask']),
     handleNewTask() {
-      const userData = {
-        tasks: this.tasks,
+      const newTask = {
+        title: this.titleTask,
+        user_id: this.user.id,
       };
-      this.newTask(userData.tasks);
+      this.createTask(newTask);
     },
   },
 };
