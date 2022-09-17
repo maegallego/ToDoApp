@@ -2,9 +2,9 @@
     <button v-if="user != null" @click="handleSignOut">
         Log out
     </button>
-    <a v-if="user === null" href="/login">
+    <router-link v-if="user === null" to='/login'>
         Sign In
-    </a>
+    </router-link>
 </template>
 
 <script>
@@ -19,11 +19,7 @@ export default {
   methods: {
     ...mapActions(userStore, ['signOut']),
     handleSignOut() {
-      const userData = {
-        email: this.email,
-        password: this.password,
-      };
-      this.signOut(userData.email, userData.password);
+      this.$router.push({ path: '/logout-ok' });
     },
   },
 };

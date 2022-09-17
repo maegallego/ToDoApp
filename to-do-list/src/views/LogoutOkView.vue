@@ -3,7 +3,7 @@
         <h1>You've successfully signed out.</h1>
     </div>
     <div>
-        <a href="/">Return to homepage.</a>
+        <router-link to='/'>Return to homepage.</router-link>
     </div>
 </template>
 

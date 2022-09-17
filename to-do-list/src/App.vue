@@ -1,8 +1,5 @@
 <template>
-  <nav>
-    <router-link to='/'>Home</router-link> |
-    <NavBar />
-  </nav>
+  <NavBar />
   <router-view />
 </template>
 
@@ -19,6 +16,7 @@ export default {
   methods: {
     ...mapActions(userStore, ['fetchUser']),
   },
+  /*
   async created() {
     try {
       await this.fetchUser();
@@ -30,7 +28,7 @@ export default {
     } catch (e) {
       console.error(e);
     }
-  },
+  }, */
   components: { NavBar },
 };
 

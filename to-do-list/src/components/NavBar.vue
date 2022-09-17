@@ -1,6 +1,8 @@
 <template>
-    <p>Hola</p>
-    <Logout />
+    <nav>
+        <router-link to='/'>Home</router-link> |
+        <Logout />
+    </nav>
 </template>
 
 <script>
