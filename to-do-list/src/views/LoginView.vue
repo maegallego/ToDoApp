@@ -14,7 +14,6 @@ export default {
     return {
       email: '',
       password: '',
-      confirmPassword: '',
     };
   },
   computed: {
