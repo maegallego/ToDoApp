@@ -25,8 +25,9 @@
           <div>
             <textarea v-model='description' placeholder='Llevar el DNI. Recoger carta.'></textarea>
           </div>
-          <input type='checkbox' id='checkbox' v-model='is_complete' />
-          <label for='is_complete'>Task completed</label>
+          <label for='is_complete'>Task completed
+            <input type='checkbox' id='checkbox' v-model='is_complete' />
+          </label>
           <button @click.prevent='handleNewTask'>Crear nueva tarea</button>
       </form>
   </div>

@@ -6,7 +6,3 @@
         <router-link to='/'>Return to homepage.</router-link>
     </div>
 </template>
-
-<script>
-
-</script>
