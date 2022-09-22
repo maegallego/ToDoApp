@@ -33,5 +33,8 @@ export default defineStore('tasks', {
       if (error) throw error;
       this.tasks.splice(taskIndex, 1);
     },
+    getTaskById(taskId) {
+      return this.tasks.find((task) => task.id === parseInt(taskId, 10));
+    },
   },
 });

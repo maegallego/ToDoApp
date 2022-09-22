@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Create Task</h2>
       <form>
           <div>
               <label for='titleTask'>Task
@@ -9,6 +8,7 @@
                   type='text'
                   placeholder='Ir a Correos'
                   v-model='titleTask'
+                  required
                   />
               </label>
           </div>
@@ -20,10 +20,12 @@
               <option value='3'>Medium</option>
               <option value='2'>High</option>
               <option value='1'>Urgent</option>
+              required
             </select>
           </div>
           <div>
-            <textarea v-model='description' placeholder='Llevar el DNI. Recoger carta.'></textarea>
+            <textarea v-model='description' placeholder='Llevar el DNI. Recoger carta.' required>
+            </textarea>
           </div>
           <label for='is_complete'>Task completed
             <input type='checkbox' id='checkbox' v-model='is_complete' />
@@ -43,9 +45,9 @@ export default {
   data() {
     return {
       titleTask: '',
-      priority: '',
+      priority: 4,
       description: '',
-      completed: 'false',
+      completed: false,
     };
   },
   computed: {
@@ -63,6 +65,7 @@ export default {
         is_complete: this.is_complete,
       };
       this.createTask(newTask);
+      this.$router.push({ path: '/' });
     },
   },
 };

@@ -3,6 +3,8 @@
     <h1>Esta es la vista de sign up.</h1>
     <div>
       <SignUp />
+      <p>Already have an account?</p>
+    <router-link to="/auth/login">Log in</router-link>
     </div>
   </div>
 </template>

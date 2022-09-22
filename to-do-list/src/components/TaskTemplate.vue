@@ -3,6 +3,7 @@
     <p>{{ task.title }}</p>
     <p>{{ task.description }}</p>
     <button @click='handleDelete(task.id, index)'>Delete</button>
+    <router-link :to="`/edit/${task.id}`">Edit</router-link>
   </div>
 </template>
 
@@ -15,7 +16,7 @@ export default {
     ...mapState(taskStore, ['tasks']),
   },
   methods: {
-    ...mapActions(taskStore, ['fetchTasks', 'deleteTask']),
+    ...mapActions(taskStore, ['fetchTasks', 'deleteTask', 'getTaskById']),
     handleDelete(id, index) {
       this.deleteTask(id, index);
     },
