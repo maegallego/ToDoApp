@@ -9,6 +9,9 @@ export default defineStore('tasks', {
     onlyCompleted() {
       return this.tasks.filter((task) => task.is_complete);
     },
+    onlyPending() {
+      return this.tasks.filter((task) => !task.is_complete);
+    },
   },
   actions: {
     async fetchTasks() {

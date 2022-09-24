@@ -23,6 +23,9 @@
             <button @click="handleSignIn">Sign In</button>
         </form>
     </div>
+    <div v-if="errorMessage">
+          {{ errorMessage }}
+    </div>
 </template>
 
 <script>
@@ -35,6 +38,7 @@ export default {
     return {
       email: '',
       password: '',
+      errorMessage: '',
     };
   },
   computed: {
@@ -47,7 +51,12 @@ export default {
         email: this.email,
         password: this.password,
       };
-      this.signIn(userData.email, userData.password);
+      try {
+        this.signIn(userData.email, userData.password);
+      } catch (error) {
+        this.errorMessage = 'Could not log in.';
+        console.log(error.message);
+      }
     },
   },
 };

@@ -30,6 +30,9 @@
             </div>
             <button @click="handleSignUp">Sign Up</button>
         </form>
+        <div v-if="errorMessage">
+          {{ errorMessage }}
+        </div>
     </div>
 </template>
 
@@ -44,6 +47,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      errorMessage: '',
     };
   },
   computed: {
@@ -53,14 +57,19 @@ export default {
     ...mapActions(userStore, ['signUp']),
     handleSignUp() {
       if (this.password !== this.confirmPassword) {
-        console.log('Passwords dont match');
+        this.errorMessage = 'Passwords dont match';
         return;
       }
       const userData = {
         email: this.email,
         password: this.password,
       };
-      this.signUp(userData.email, userData.password);
+      try {
+        this.signUp(userData.email, userData.password);
+      } catch (error) {
+        this.errorMessage = 'No se ha podido hacer log in.';
+        console.log(error.message);
+      }
     },
   },
 };

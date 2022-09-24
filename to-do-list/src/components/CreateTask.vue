@@ -16,10 +16,10 @@
             Select priority : {{ priority }}
             <br />
             <select v-model='priority'>
-              <option value='4' selected>Low</option>
-              <option value='3'>Medium</option>
-              <option value='2'>High</option>
-              <option value='1'>Urgent</option>
+              <option value='Low' selected>Low</option>
+              <option value='Medium'>Medium</option>
+              <option value='High'>High</option>
+              <option value='Urgent'>Urgent</option>
               required
             </select>
           </div>
@@ -32,6 +32,9 @@
           </label>
           <button @click.prevent='handleNewTask'>Crear nueva tarea</button>
       </form>
+    <div v-if="errorMessage">
+        {{ errorMessage }}
+    </div>
   </div>
 </template>
 
@@ -48,6 +51,7 @@ export default {
       priority: 4,
       description: '',
       completed: false,
+      errorMessage: '',
     };
   },
   computed: {
@@ -64,8 +68,13 @@ export default {
         description: this.description,
         is_complete: this.is_complete,
       };
-      this.createTask(newTask);
-      this.$router.push({ path: '/' });
+      try {
+        this.createTask(newTask);
+        this.$router.push({ path: '/' });
+      } catch (error) {
+        this.errorMessage = 'Could not register create a new task.';
+        console.log(error.message);
+      }
     },
   },
 };

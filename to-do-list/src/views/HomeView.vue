@@ -1,15 +1,18 @@
 <template>
   <div class='home'>
     <h1>vista home</h1>
-    <div v-if="this.tasks.length === 0">
+    <div v-if='this.tasks.length === 0'>
       <p>No tasks yet!</p>
       <router-link to='/new-task'>Add a new task</router-link>
     </div>
-    <!-- <button @click="onlyCompleted"></button> -->
-    <div v-for="task in onlyCompleted" :key="task.id" :id="task.id">
-      <p>{{task.title}}</p>
+    <h2>Completed tasks</h2>
+    <div v-for='task in onlyCompleted' :key='task.id' :id='task.id'>
+     <TaskTemplate :taskProp='task' />
     </div>
-    <TaskTemplate />
+    <h2>Pending tasks</h2>
+    <div v-for='task in onlyPending' :key='task.id' :id='task.id'>
+      <TaskTemplate :taskProp='task'/>
+    </div>
   </div>
 </template>
 
@@ -20,13 +23,13 @@ import TaskTemplate from '@/components/TaskTemplate.vue';
 
 export default {
   name: 'HomeView',
-  // data() {
-  //   return {
-  //     showOnlyCompleted: false,
-  //   };
-  // },
+  data() {
+    return {
+      showOnlyCompleted: false,
+    };
+  },
   computed: {
-    ...mapState(taskStore, ['tasks', 'onlyCompleted']),
+    ...mapState(taskStore, ['tasks', 'onlyCompleted', 'onlyPending']),
   },
   methods: {
     ...mapActions(taskStore, ['fetchTasks', 'deleteTask']),

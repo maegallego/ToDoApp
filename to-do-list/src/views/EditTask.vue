@@ -1,11 +1,6 @@
 <template>
   <h1>Esta es la vista de edit</h1>
   <div v-if='task'>
-    {{ task }}
-    <p>{{ task.title }}</p>
-    <p>{{ task.description }}</p>
-  </div>
-  <div>
     <form>
       <div>
         <label for='titleTask'
@@ -22,17 +17,14 @@
         Select priority : {{ priority }}
         <br />
         <select v-model='priority'>
-          <option value='4' selected>Low</option>
-          <option value='3'>Medium</option>
-          <option value='2'>High</option>
-          <option value='1'>Urgent</option>
+          <option value='Low' selected>Low</option>
+          <option value='Medium'>Medium</option>
+          <option value='High'>High</option>
+          <option value='Urgent'>Urgent</option>
         </select>
       </div>
       <div>
-        <textarea
-          v-model='description'
-          placeholder='Llevar el DNI. Recoger carta.'
-        >
+        <textarea v-model='description' :placeholder='task.description'>
         </textarea>
       </div>
       <label for='is_complete'
@@ -52,31 +44,36 @@ export default {
   data() {
     return {
       task: null,
-      newTask: null,
       titleTask: '',
-      priority: 0,
+      priority: 4,
       description: '',
       completed: false,
+      id: null,
     };
   },
   async created() {
-    const id = this.$route.params.taskId;
+    this.id = this.$route.params.taskId;
     const {
       data: [currentTask],
-    } = await supabase.from('tasks').select('*').match({ id });
+    } = await supabase.from('tasks').select('*').match({ id: this.id });
     this.task = currentTask;
-    this.newTask = this.task;
   },
   methods: {
     async handleUpdate() {
-      if (this.titleTask) this.newTask.title = this.titleTask;
-      if (this.priority) this.newTask.priority = this.priority;
-      if (this.description) this.newTask.description = this.description;
-      if (this.is_complete) this.newTask.is_complete = this.is_complete;
-      await supabase
-        .from('tasks')
-        .update({ ...newTask })
-        .match({ id });
+      try {
+        if (this.titleTask) this.task.title = this.titleTask;
+        if (this.priority) this.task.priority = this.priority;
+        if (this.description) this.task.description = this.description;
+        if (this.is_complete) this.task.is_complete = this.is_complete;
+        await supabase
+          .from('tasks')
+          .update({ ...this.task })
+          .match({ id: this.id });
+        this.$router.push({ path: `/#${this.task.id}` });
+      } catch (error) {
+        this.errorMessage = 'Could not register new user.';
+        console.log(error.message);
+      }
     },
   },
 };
