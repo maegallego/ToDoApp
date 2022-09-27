@@ -1,39 +1,60 @@
 <template>
-  <h1>Esta es la vista de edit</h1>
-  <div v-if='task'>
-    <form>
-      <div>
-        <label for='titleTask'
-          >Task
-          <input
-            name='titleTask'
-            type='text'
-            :placeholder='task.title'
-            v-model='titleTask'
-          />
-        </label>
+  <div class='margin'>
+    <div class='addtask-container purple-shadow centered-div'>
+      <h1>Edit your task.</h1>
+      <div v-if='task'>
+        <form class='align-left'>
+          <div>
+            <label for='titleTask'
+              >Title
+              <input
+                class='full-width form-input'
+                name='titleTask'
+                type='text'
+                :placeholder='task.title'
+                v-model='titleTask'
+              />
+            </label>
+          </div>
+          <div>
+            Description
+            <textarea
+              class='full-width form-input'
+              v-model='description'
+              :placeholder='task.description'
+            >
+            </textarea>
+          </div>
+          <div>
+            Select priority:
+            <br />
+            <select v-model='priority'>
+              <option value='Low' selected>Low</option>
+              <option value='Medium'>Medium</option>
+              <option value='High'>High</option>
+              <option value='Urgent'>Urgent</option>
+            </select>
+          </div>
+          <label for='is_complete'
+            >Task completed
+            <input type='checkbox' id='checkbox' v-model='is_complete'
+            true-value="true" false-value="false"/>
+          </label>
+          <div class='two-btn-right'>
+            <router-link class='transparent-btn' to='/'
+            >Cancel</router-link
+            >
+            <button
+              class='transparent-btn bg-purple'
+              @click.prevent='handleUpdate'
+            >
+              Update
+            </button>
+            {{errorMessage}}
+          </div>
+        </form>
       </div>
-      <div>
-        Select priority : {{ priority }}
-        <br />
-        <select v-model='priority'>
-          <option value='Low' selected>Low</option>
-          <option value='Medium'>Medium</option>
-          <option value='High'>High</option>
-          <option value='Urgent'>Urgent</option>
-        </select>
-      </div>
-      <div>
-        <textarea v-model='description' :placeholder='task.description'>
-        </textarea>
-      </div>
-      <label for='is_complete'
-        >Task completed
-        <input type='checkbox' id='checkbox' v-model='is_complete' />
-      </label>
-      <router-link to='/'>Cancel</router-link>
-      <button @click.prevent='handleUpdate'>Update</button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -45,9 +66,9 @@ export default {
     return {
       task: null,
       titleTask: '',
-      priority: 4,
+      priority: '',
       description: '',
-      completed: false,
+      is_complete: null,
       id: null,
     };
   },
@@ -71,8 +92,7 @@ export default {
           .match({ id: this.id });
         this.$router.push({ path: `/#${this.task.id}` });
       } catch (error) {
-        this.errorMessage = 'Could not register new user.';
-        console.log(error.message);
+        this.errorMessage = error.message;
       }
     },
   },

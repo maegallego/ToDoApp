@@ -1,7 +1,11 @@
 <template>
-    <SignIn />
+  <div class='margin'>
+    <div class='addtask-container purple-shadow centered-div'>
+      <SignIn />
     <p>Don't have an account?</p>
-    <router-link to="/auth/sign-up">Register</router-link>
+    <router-link class='transparent-btn centered-div' to="/auth/sign-up">Register</router-link>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <h1>Add a new task</h1>
-    <CreateTask />
+  <div class='margin'>
+    <div class='addtask-container purple-shadow centered-div'>
+      <h1>Add a new task</h1>
+      <CreateTask />
+    </div>
   </div>
 </template>
 

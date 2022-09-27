@@ -1,9 +1,9 @@
 <template>
   <div>
-      <form>
+      <form class='align-left'>
           <div>
-              <label for='titleTask'>Task
-                  <input
+              <label for='titleTask'>Title
+                  <input class='full-width form-input'
                   name='titleTask'
                   type='text'
                   placeholder='Ir a Correos'
@@ -12,9 +12,14 @@
                   />
               </label>
           </div>
+          <div>Description
+            <textarea v-model='description'
+            class='full-width form-input' placeholder='Llevar el DNI. Recoger carta.' required>
+            </textarea>
+          </div>
+          <div></div>
           <div>
-            Select priority : {{ priority }}
-            <br />
+            Select priority:
             <select v-model='priority'>
               <option value='Low' selected>Low</option>
               <option value='Medium'>Medium</option>
@@ -23,14 +28,10 @@
               required
             </select>
           </div>
-          <div>
-            <textarea v-model='description' placeholder='Llevar el DNI. Recoger carta.' required>
-            </textarea>
-          </div>
           <label for='is_complete'>Task completed
             <input type='checkbox' id='checkbox' v-model='is_complete' />
           </label>
-          <button @click.prevent='handleNewTask'>Crear nueva tarea</button>
+          <button class='transparent-btn bg-purple' @click.prevent='handleNewTask'>Add Task</button>
       </form>
     <div v-if="errorMessage">
         {{ errorMessage }}
@@ -48,10 +49,11 @@ export default {
   data() {
     return {
       titleTask: '',
-      priority: 4,
+      priority: 'Low',
       description: '',
       completed: false,
       errorMessage: '',
+      is_complete: false,
     };
   },
   computed: {
@@ -60,7 +62,7 @@ export default {
   },
   methods: {
     ...mapActions(taskStore, ['createTask']),
-    handleNewTask() {
+    async handleNewTask() {
       const newTask = {
         title: this.titleTask,
         user_id: this.user.id,
@@ -69,11 +71,10 @@ export default {
         is_complete: this.is_complete,
       };
       try {
-        this.createTask(newTask);
+        await this.createTask(newTask);
         this.$router.push({ path: '/' });
       } catch (error) {
-        this.errorMessage = 'Could not register create a new task.';
-        console.log(error.message);
+        this.errorMessage = error.message;
       }
     },
   },

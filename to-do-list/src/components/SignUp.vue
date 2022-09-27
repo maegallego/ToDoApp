@@ -1,20 +1,20 @@
 <template>
     <div>
-        <h2>Sign Up</h2>
-        <form @submit.prevent='handleSignUp'>
+        <h1>Sign Up</h1>
+        <form class='align-left'  @submit.prevent='handleSignUp'>
             <div>
                 <label for='email'>Email
-                    <input id='email'
+                    <input id='email' class='full-width form-input'
                     type='email'
-                    placeholder='email'
+                    placeholder='Email'
                     v-model='email'
                     />
                 </label>
             </div>
             <div>
                 <label for='password'>Password
-                    <input id='password'
-                    placeholder='password'
+                    <input id='password' class='full-width form-input'
+                    placeholder='Password'
                     type='password'
                     v-model='password'
                     />
@@ -22,13 +22,13 @@
             </div>
             <div>
                 <label for="confirmPassword">Confirm Password
-                    <input id="confirmPassword"
+                    <input id="confirmPassword" class='full-width form-input'
                     placeholder='Confirm Password'
                     type="password"
                     v-model="confirmPassword" />
                 </label>
             </div>
-            <button @click="handleSignUp">Sign Up</button>
+            <button class='transparent-btn bg-purple' @click="handleSignUp">Sign Up</button>
         </form>
         <div v-if="errorMessage">
           {{ errorMessage }}
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['signUp']),
-    handleSignUp() {
+    async handleSignUp() {
       if (this.password !== this.confirmPassword) {
         this.errorMessage = 'Passwords dont match';
         return;
@@ -65,10 +65,9 @@ export default {
         password: this.password,
       };
       try {
-        this.signUp(userData.email, userData.password);
+        await this.signUp(userData.email, userData.password);
       } catch (error) {
-        this.errorMessage = 'No se ha podido hacer log in.';
-        console.log(error.message);
+        this.errorMessage = error.message;
       }
     },
   },
