@@ -1,28 +1,32 @@
 <template>
-    <div>
-        <h2>Already have an account?</h2>
-        <form @submit.prevent='handleSignIn'>
-            <div>
-                <label for='email'>Email
-                    <input id='email'
-                    type='email'
-                    placeholder='email'
-                    v-model='email'
-                    />
-                </label>
-            </div>
-            <div>
-                <label for='password'>Password
-                    <input id='password'
-                    placeholder='password'
-                    type='password'
-                    v-model='password'
-                    />
-                </label>
-            </div>
-            <button @click="handleSignIn">Sign In</button>
-        </form>
-    </div>
+  <div>
+      <h1>Already have an account?</h1>
+      <form class='align-left' @submit.prevent='handleSignIn'>
+          <div>
+              <label for='email'>Email
+                  <input id='email' class='full-width form-input'
+                  type='email'
+                  placeholder='Email'
+                  v-model='email'
+                  />
+              </label>
+          </div>
+          <div>
+              <label for='password'>Password
+                  <input id='password' class='full-width form-input'
+                  placeholder='Password'
+                  type='password'
+                  v-model='password'
+                  />
+              </label>
+          </div>
+          <button class='transparent-btn bg-purple'
+          @click="handleSignIn">Sign In</button>
+      </form>
+  </div>
+  <div v-if="errorMessage">
+        {{ errorMessage }}
+  </div>
 </template>
 
 <script>
@@ -35,6 +39,7 @@ export default {
     return {
       email: '',
       password: '',
+      errorMessage: '',
     };
   },
   computed: {
@@ -42,12 +47,16 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['signIn']),
-    handleSignIn() {
+    async handleSignIn() {
       const userData = {
         email: this.email,
         password: this.password,
       };
-      this.signIn(userData.email, userData.password);
+      try {
+        await this.signIn(userData.email, userData.password);
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
     },
   },
 };

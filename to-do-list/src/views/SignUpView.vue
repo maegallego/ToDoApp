@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <h1>Esta es la vista de sign up.</h1>
-    <div>
+  <div class='margin'>
+    <div class='addtask-container purple-shadow centered-div'>
       <SignUp />
+      <p>Already have an account?</p>
+    <router-link class='transparent-btn centered-div' to="/auth/login">Log in</router-link>
     </div>
   </div>
 </template>

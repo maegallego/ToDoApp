@@ -1,8 +1,8 @@
 <template>
-    <button v-if="user != null" @click="handleSignOut">
+    <button v-if="user != null" class='nostyles-btn logout-btn dark-blue' @click="handleSignOut">
         Log out
     </button>
-    <router-link v-if="user === null" to='/auth/login'>
+    <router-link class='nostyles-btn logout-btn dark-blue' v-if="user === null" to='/auth/login'>
         Sign In
     </router-link>
 </template>

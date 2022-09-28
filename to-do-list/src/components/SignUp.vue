@@ -1,20 +1,20 @@
 <template>
     <div>
-        <h2>Sign Up</h2>
-        <form @submit.prevent='handleSignUp'>
+        <h1>Sign Up</h1>
+        <form class='align-left'  @submit.prevent='handleSignUp'>
             <div>
                 <label for='email'>Email
-                    <input id='email'
+                    <input id='email' class='full-width form-input'
                     type='email'
-                    placeholder='email'
+                    placeholder='Email'
                     v-model='email'
                     />
                 </label>
             </div>
             <div>
                 <label for='password'>Password
-                    <input id='password'
-                    placeholder='password'
+                    <input id='password' class='full-width form-input'
+                    placeholder='Password'
                     type='password'
                     v-model='password'
                     />
@@ -22,14 +22,17 @@
             </div>
             <div>
                 <label for="confirmPassword">Confirm Password
-                    <input id="confirmPassword"
+                    <input id="confirmPassword" class='full-width form-input'
                     placeholder='Confirm Password'
                     type="password"
                     v-model="confirmPassword" />
                 </label>
             </div>
-            <button @click="handleSignUp">Sign Up</button>
+            <button class='transparent-btn bg-purple' @click="handleSignUp">Sign Up</button>
         </form>
+        <div v-if="errorMessage">
+          {{ errorMessage }}
+        </div>
     </div>
 </template>
 
@@ -44,6 +47,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      errorMessage: '',
     };
   },
   computed: {
@@ -51,16 +55,20 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['signUp']),
-    handleSignUp() {
+    async handleSignUp() {
       if (this.password !== this.confirmPassword) {
-        console.log('Passwords dont match');
+        this.errorMessage = 'Passwords dont match';
         return;
       }
       const userData = {
         email: this.email,
         password: this.password,
       };
-      this.signUp(userData.email, userData.password);
+      try {
+        await this.signUp(userData.email, userData.password);
+      } catch (error) {
+        this.errorMessage = error.message;
+      }
     },
   },
 };
