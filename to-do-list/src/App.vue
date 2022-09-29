@@ -34,6 +34,8 @@ export default {
 </script>
 
 <style>
+@import '@/assets/styles.css';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -44,14 +46,21 @@ export default {
 
 nav {
   padding: 30px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #e5e8f8;
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #363c5d;
+  text-decoration:none;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #857bcd;
 }
 </style>
